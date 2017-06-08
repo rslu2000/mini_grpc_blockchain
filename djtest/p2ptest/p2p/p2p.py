@@ -30,7 +30,7 @@ class Node:
                 Node.__Nodes.add(target)
 
                 def linkBroadcast():
-                    time.sleep(10);
+                    time.sleep(random.randint(1,60));
                     linkBroadcastBlock = block.Chain.getBlockFromHeight(block.Chain.getHeight())
                     print("<= [broadcast Block]:%s" % linkBroadcastBlock.pb2.blockhash)
                     Node.broadcast(SERVICE*TRANSACTION+BLOCKBROADCAST,linkBroadcastBlock.pb2)

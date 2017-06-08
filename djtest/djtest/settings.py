@@ -56,7 +56,7 @@ ROOT_URLCONF = 'djtest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['p2p_web/templates'],
+        'DIRS': ['management/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

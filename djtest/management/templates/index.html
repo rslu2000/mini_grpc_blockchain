@@ -1,0 +1,19 @@
+<form align="center" action="JoinNode" method='get'>
+    IP:PORT=<input name="target" >
+    <input type="submit" value="送出" >
+</form>
+<br>
+<form align="center" action="index" method='post'>
+    留言=<input name="data" >
+    <input type="submit" value="送出" >
+</form>
+<table align="center" >
+{% for b in blocks %}
+<tr>
+    <td>{{b.height}}<td>
+    <td>{{b.ctime}}<td>
+    <td width="150">{{b.value}}<td>
+</tr>
+{% endfor %}
+</table>
+

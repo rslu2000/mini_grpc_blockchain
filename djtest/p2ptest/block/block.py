@@ -73,7 +73,7 @@ class Block:
 
     def firstblock(self):
         #創世區塊
-        pb2 = grpc_pb2.Block(height = 0,ctime = "2017-05-21",value = "盧老師區塊鏈",
+        pb2 = grpc_pb2.Block(height = 0,ctime = "The May 21 12:43:56 2017",value = "盧老師區塊鏈",
             previoushash = ":)",blockhash = "",nexthash = "")
         _temp = pb2.SerializeToString()
         _sha256 = hashlib.sha256(_temp).hexdigest()
@@ -86,7 +86,7 @@ class Block:
         # 建立區塊
         currentlyHeight = Chain.getHeight()
         previousblock = Chain.getBlockFromHeight(currentlyHeight)
-        pb2 = grpc_pb2.Block(height = currentlyHeight+1,ctime = time.ctime(),value = value,
+        pb2 = grpc_pb2.Block(height = currentlyHeight+1,ctime = time.ctime(),value = str(value),
             previoushash = previousblock.pb2.blockhash,blockhash = "",nexthash = "")
         _temp = pb2.SerializeToString()
         _sha256 = hashlib.sha256(_temp).hexdigest()
@@ -258,11 +258,44 @@ class Chain:
                 print("=> change nexthash")
                 return "CHANGE_NEXTHASH"
         
-        if block.pb2.height <  currentlyHeight:
+        if block.pb2.height < currentlyHeight:
             #獲得太舊區塊
             print("=> get too old block")
             return "%dTOO_OLD_BLOCK" % currentlyHeight
 
         return "ERROR_HAVE_NOT_BLOCK_TYPE"
-        
+
+    @staticmethod
+    def show():
+        result = ""
+        height = 0
+        ptrBlock = _firstblock
+        result += (u"height:%d\tctime:%s\tprevioushash:%s\tblockhash:%s\tnexthash:%s\tvalue:%s\r\n" % 
+            (ptrBlock.pb2.height,ptrBlock.pb2.ctime,ptrBlock.pb2.previoushash,ptrBlock.pb2.blockhash,ptrBlock.pb2.nexthash,ptrBlock.pb2.value.decode('utf-8')));
+        while ptrBlock.pb2.nexthash != "" :
+            try:
+                ptrBlock = Chain._Chain[ptrBlock.pb2.nexthash]
+                result += (u"height:%d\tctime:%s\tprevioushash:%s\tblockhash:%s\tnexthash:%s\tvalue:%s\r\n" % 
+                    (ptrBlock.pb2.height,ptrBlock.pb2.ctime,ptrBlock.pb2.previoushash,
+                    ptrBlock.pb2.blockhash,ptrBlock.pb2.nexthash,ptrBlock.pb2.value.decode('utf-8')))
+            except Exception as e:
+                # 高度差>2 或 不同鍊 時發生
+                break;
+            height += 1
+        return result
+    @staticmethod
+    def showtolist():
+        result = []
+        height = 0
+        ptrBlock = _firstblock
+        result.append(ptrBlock.pb2)
+        while ptrBlock.pb2.nexthash != "" :
+            try:
+                ptrBlock = Chain._Chain[ptrBlock.pb2.nexthash]
+                result.append(ptrBlock.pb2)
+            except Exception as e:
+                # 高度差>2 或 不同鍊 時發生
+                break;
+            height += 1
+        return result
 _firstblock = Block().firstblock()

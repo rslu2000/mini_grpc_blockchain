@@ -22,4 +22,6 @@ urlpatterns = [
     url(r'^Send/?$', management_views.Send),
     url(r'^JoinNode/?$', management_views.JoinNode),
     url(r'^ShowNodes/?$', management_views.ShowNodes),
+    url(r'^ShowBlocks/?$', management_views.ShowBlocks),
+    url(r'^index/?$|', management_views.index),
 ]

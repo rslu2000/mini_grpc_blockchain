@@ -49,4 +49,5 @@ def Send(request):
 def ShowBlocks(request):
     response = block.Chain.show()
     response=response.replace('\r\n','<br><br>')
+    response=response.replace('\t','<br>')
     return HttpResponse(response)

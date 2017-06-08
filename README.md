@@ -1,9 +1,9 @@
 
 # /index 或 /
-簡易留言板
+簡易留言板
 # /JoinNode?target=ip:port
 加入節點
-# /Send (POST)
+# /Send (POST)
 送出資料
 # /ShowNodes
 查看節點

@@ -4,7 +4,7 @@ pip install -r pip_install.txt
 ```
 # 執行
 GRPC_PORT=[grpc_port] python2.7 manage.py runserver [webport]\
-例:
+例如:
 ```
 GRPC_PORT=9001 python2.7 manage.py runserver 9000
 ```

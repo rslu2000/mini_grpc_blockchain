@@ -8,7 +8,7 @@ from p2ptest.synchronization import synchronization
 from p2ptest.enum.enum import *
 import p2ptest.p2p as p2p
 
-_compiNum = re.compile("^\d+$")  #判斷全數字用
+_compiNum = re.compile("^\d+$")  # 判斷全數字用
 _compiW = re.compile("^\w{64}")
 
 def defferentTreeSyn(node):
@@ -16,7 +16,7 @@ def defferentTreeSyn(node):
     block = Chain.getBlockFromHeight(Chain.getHeight()-1)
     while not block.To(node):
         block = Chain.getBlockFromHash(block.pb2.previoushash)
-    print("== Finish Synchronization of DIFFERENT_TREE = = ")
+    print("== Finish Synchronization of DIFFERENT_TREE ==")
 
 
 def Task(node,stub,task,message):
@@ -72,7 +72,7 @@ class Block:
         pass
 
     def firstblock(self):
-        #創世區塊
+        # 世區塊
         pb2 = grpc_pb2.Block(height = 0,ctime = "The May 21 12:43:56 2017",value = "盧老師區塊鏈",
             previoushash = ":)",blockhash = "",nexthash = "")
         _temp = pb2.SerializeToString()
@@ -117,7 +117,7 @@ class Block:
             return NOT_FOUND_BLOCK
 
         if previousBlock.pb2.blockhash!=_temp.previoushash:
-            #警告新區塊 與 前區塊 
+            # 警告新區塊 與 前區塊 
             return WARNING_PREVIOUS_HASH_NOT_EQUAL
         
         return SUCCESS_VERTIFY
@@ -219,21 +219,21 @@ class Chain:
         if block.pb2.height - currentlyHeight == 1:
             lastBlock = Chain.getBlockFromHeight(currentlyHeight)
             if lastBlock.pb2.blockhash == block.pb2.previoushash:
-                #增加新區塊。
+                # 增加新區塊。
                 lastBlock.pb2.nexthash = block.pb2.blockhash
                 lastBlock = block
                 print("=> get new block")
                 return "HEIGHT_ADD"
 
             else:
-                #發現不同分支。
+                # 發現不同分支。
                 print("=> different tree")
                 synchronization.setBranchTarget(block.pb2.blockhash)
                 return "DIFFERENT_TREE"
         
 
         if block.pb2.height > currentlyHeight:
-            #獲得太新區塊。
+            # 獲得太新區塊。
             print("=> get too new block")
             return "%dTOO_NEW_BLOCK" % currentlyHeight
         
@@ -245,7 +245,7 @@ class Chain:
             if lastBlock.pb2.blockhash == block.pb2.blockhash:
                 print("=> get repeat block")
                 return "HAS_BLOCK"
-            #發現同高度不同分支。
+            # 發現同高度不同分支。
             print("=> get equal height but different block")
             print("do nothing")
             return "DIFFERENT_TREE_AND_HEIGHT_EQUAL"
@@ -259,7 +259,7 @@ class Chain:
                 return "CHANGE_NEXTHASH"
         
         if block.pb2.height < currentlyHeight:
-            #獲得太舊區塊
+            # 獲得太舊區塊
             print("=> get too old block")
             return "%dTOO_OLD_BLOCK" % currentlyHeight
 

@@ -27,8 +27,8 @@ class Synchronization(grpc_pb2.SynchronizationServicer):
         raise Exception("So Fast ,Wait... , Don't Close")
         
     def To(self, request, context):
-        # 收到Block
-        # 如果高度增加 回傳 SYNCHRONIZATION ,否則 NOT_SYNCHRONIZATION
+        # => Block
+        # <= 如果高度增加 回傳 SYNCHRONIZATION ,否則 NOT_SYNCHRONIZATION
         global __BranchTarget,flag
         b = block.block.Block()
         b.pb2 = request

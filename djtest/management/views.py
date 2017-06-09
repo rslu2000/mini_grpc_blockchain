@@ -32,7 +32,7 @@ def ShowNodes(request):
     nodeslist = list(p2p.Node.getNodesList())
     response = ""
     for node in nodeslist:
-        reponse += "%s\n<br>" % node
+        response += "%s\n<br>" % node
     return HttpResponse(response)
 
 def Send(request):

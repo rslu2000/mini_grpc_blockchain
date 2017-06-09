@@ -17,6 +17,7 @@ from p2ptest.enum.enum import *
 PORT = ""
 GET_SELFNODE_FALG = False
 selfipport = ""
+linkBroadcastFlag=False
 
 class Node:
     __Nodes = set()
@@ -30,10 +31,14 @@ class Node:
                 Node.__Nodes.add(target)
 
                 def linkBroadcast():
-                    time.sleep(random.randint(1,60));
-                    linkBroadcastBlock = block.Chain.getBlockFromHeight(block.Chain.getHeight())
-                    print("<= [broadcast Block]:%s" % linkBroadcastBlock.pb2.blockhash)
-                    Node.broadcast(SERVICE*TRANSACTION+BLOCKBROADCAST,linkBroadcastBlock.pb2)
+                    global linkBroadcastFlag
+                    if linkBroadcastFlag == False:
+                        linkBroadcastFlag = True
+                        while linkBroadcastFlag:
+                            time.sleep(random.randint(1,60));
+                            linkBroadcastBlock = block.Chain.getBlockFromHeight(block.Chain.getHeight())
+                            print("<= [broadcast Block]:%s" % linkBroadcastBlock.pb2.blockhash)
+                            Node.broadcast(SERVICE*TRANSACTION+BLOCKBROADCAST,linkBroadcastBlock.pb2)
                 threading.Thread(target=linkBroadcast).start()
 
         elif type(target) == list:

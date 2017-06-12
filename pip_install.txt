@@ -24,4 +24,4 @@ wcwidth==0.1.7
 wrapt==1.10.10
 grpcio==1.3.5
 grpcio-tools==1.3.5
-aksdfa==0.3
+p2p_grpc_blockchain==0.4.1

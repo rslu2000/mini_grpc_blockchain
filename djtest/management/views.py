@@ -2,9 +2,9 @@
 from django.shortcuts import render ,redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from p2ptest.p2p import p2p
-from p2ptest.enum.enum import *
-from p2ptest.block import block
+from p2p_grpc_blockchain.p2p import p2p
+from p2p_grpc_blockchain.enum.enum import *
+from p2p_grpc_blockchain.block import block
 
 def index(request):
     try:

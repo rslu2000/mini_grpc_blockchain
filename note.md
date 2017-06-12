@@ -43,3 +43,8 @@ python manage.py startapp learn
 ```
 os.environ["env"]
 ```
+
+## grcp compiler
+```
+python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./grpc.proto
+```

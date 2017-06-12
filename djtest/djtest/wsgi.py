@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
-from p2ptest.p2p import p2p
+from p2p_grpc_blockchain.p2p import p2p
 p2p.grpcNetworkStart()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djtest.settings")

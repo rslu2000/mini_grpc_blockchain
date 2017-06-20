@@ -22,9 +22,9 @@ def index(request):
     txsdict=transaction.Transaction.Transactions
     for box in blocks:
         blocktxs=[]
-        box.time=time.strftime("%Y/%m/%d %H:%M:%S", time.localtime(float(box.pb2.unixtime)))
+        box.time=time.strftime("%Y/%m/%d %H:%M:%S", time.localtime(float(box.pb2.unixtime)+28800))
         for txhash in box.pb2.txshash:
-            blocktxs.append({"time":time.strftime("%Y/%m/%d %H:%M:%S", time.localtime(float(txsdict[txhash].pb2.unixtime))),"body":txsdict[txhash].pb2.body })
+            blocktxs.append({"time":time.strftime("%Y/%m/%d %H:%M:%S", time.localtime(float(txsdict[txhash].pb2.unixtime)+28800)),"body":txsdict[txhash].pb2.body })
             box.txs=blocktxs
     blocks.reverse()
 

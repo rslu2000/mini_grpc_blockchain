@@ -5,19 +5,32 @@ from django.http import HttpResponseRedirect
 from p2p_grpc_blockchain.p2p import p2p
 from p2p_grpc_blockchain.enum.enum import *
 from p2p_grpc_blockchain.block import block
+from p2p_grpc_blockchain.transaction import transaction
+import time
 
 def index(request):
     try:
         body = request.POST["data"]
-        b = block.Block()
-        b.create(body.encode('utf-8'))
-        print("<= [broadcast Block]:%s" % b.pb2.blockhash)
-        p2p.Node.broadcast(SERVICE*TRANSACTION+BLOCKBROADCAST,b.pb2)
+        tx = transaction.Transaction()
+        tx.create(body.encode('utf-8'))
+        print("<= [broadcast Tx]:%s" % tx.pb2.txhash)
+        tx.Broadcast()
         return HttpResponseRedirect('/index')
     except Exception as e:
-        pass
+        print (e)
     blocks=block.Chain.showtolist()
+    txsdict=transaction.Transaction.Transactions
+    for box in blocks:
+        blocktxs=[]
+        box.time=time.strftime("%Y/%m/%d %H:%M:%S", time.localtime(float(box.pb2.unixtime)))
+        for txhash in box.pb2.txshash:
+            blocktxs.append({"time":time.strftime("%Y/%m/%d %H:%M:%S", time.localtime(float(txsdict[txhash].pb2.unixtime))),"body":txsdict[txhash].pb2.body })
+            box.txs=blocktxs
+    blocks.reverse()
+
     return render(request,'index.html',{"blocks":blocks})
+
+
 
 def JoinNode(request):
     target = ""
@@ -47,7 +60,6 @@ def Send(request):
     return HttpResponse("test \n")
 
 def ShowBlocks(request):
-    response = block.Chain.show()
-    response=response.replace('\r\n','<br><br>')
-    response=response.replace('\t','<br>')
-    return HttpResponse(response)
+    response=block.Chain.showtolist()
+    
+    return render(request,'showblock.html',{"blocks":response})

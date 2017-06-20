@@ -1,3 +1,4 @@
 djenv
 *.pyc
-./djtest/no
+djtest/no
+djtest/p2p_grpc_blockchain/

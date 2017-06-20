@@ -1,0 +1,24 @@
+
+<table align="center" border="1">
+    <tr>
+        <td>height</td>
+        <td>unixtime</td>
+        <td>previoushash</td>
+        <td>blockhash</td>
+        <td>difficulty</td>
+        <td>answer</td>
+        <td>txshash</td>
+    </tr>
+    {% for box in blocks %}
+    <tr>
+        <td>{{box.pb2.height}}</td>
+        <td>{{box.pb2.unixtime}}</td>
+        <td>{{box.pb2.previoushash}}</td>
+        <td>{{box.pb2.blockhash}}</td>
+        <td>{{box.pb2.difficulty}}</td>
+        <td>{{box.pb2.answer}}</td>
+        <td>{{box.pb2.txshash}}</td>
+    </tr>
+    {% endfor %}
+</table>
+

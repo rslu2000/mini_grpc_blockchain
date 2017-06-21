@@ -26,7 +26,6 @@ def index(request):
         for txhash in box.pb2.txshash:
             blocktxs.append({"time":time.strftime("%Y/%m/%d %H:%M:%S", time.localtime(float(txsdict[txhash].pb2.unixtime)+28800)),"body":txsdict[txhash].pb2.body })
             box.txs=blocktxs
-    blocks.reverse()
 
     return render(request,'index.html',{"blocks":blocks})
 
